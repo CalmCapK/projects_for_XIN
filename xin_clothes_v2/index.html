@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html>
+<head>
+<link rel="stylesheet" type="text/css" href="./style.css">
+<meta charset="utf-8">
+<!--meta name="viewport" content="width=device-width, initial-scale=1" /--> 
+<title>刘雨昕的衣帽柜是你get不到的美</title>
+<script>
+window.onload = init;
+function init(){
+    console.log("load");
+    state.a = 0;
+    state.b = 0;
+    state.c = 0;
+    state.d = 0;
+    document.getElementById("head").style.backgroundImage = "url('./images/head/head_1.PNG')"
+    document.getElementById("body").style.backgroundImage = "url('./images/body/body_1.PNG')"
+    document.getElementById("background").style.backgroundImage = "url('./images/background/background_1.PNG')"
+}
+var state = {a:0, b:0, c:0, d:0};
+function show(choice){
+    if(choice === "head"){
+        document.getElementById("numhead").innerText = "当前是第"+String(state.a+1)+"个发型";
+    }else if(choice === "body"){
+        document.getElementById("numbody").innerText = "当前是第"+String(state.b+1)+"件衣服";
+    }else{
+        document.getElementById("numbackground").innerText = "当前是第"+String(state.c+1)+"个背景";
+    }
+}
+function next(choice){
+    var x = document.getElementById(choice);
+    filePath = "none";
+    if(choice === "head"){
+        state.a = (state.a + 1) % 70;
+        var name = "head_" + String(state.a + 1);
+        filePath = "./images/head/"+name+".PNG";
+    }else if(choice === "body"){
+        state.b = (state.b + 1) % 70;
+        var name = "body_" + String(state.b + 1);
+        filePath = "./images/body/"+name+".PNG";
+    }else{
+        state.c = (state.c + 1) % 13;
+        var name = "background_" + String(state.c + 1);
+        filePath = "./images/background/"+name+".PNG";
+    }
+    x.style.backgroundImage = "url(" + filePath +")";
+    show(choice);
+}
+function before(choice){
+    var x = document.getElementById(choice);
+    filePath = "none";
+    if(choice === "head"){
+        state.a = (state.a - 1 + 70) % 70;
+        var name = "head_" + String(state.a + 1);
+        filePath = "./images/head/"+name+".PNG";
+    }else if(choice === "body"){
+        state.b = (state.b - 1 + 70) % 70;
+        var name = "body_" + String(state.b + 1);
+        filePath = "./images/body/"+name+".PNG";
+    }else{
+        state.c = (state.c - 1 + 13) % 13;
+        var name = "background_" + String(state.c + 1);
+        filePath = "./images/background/"+name+".PNG";
+    }
+    x.style.backgroundImage = "url(" + filePath +")";
+    show(choice);
+}
+function change(choice){
+    var x = document.getElementById(choice);
+    filePath = "none";
+    if(choice === "head"){
+        var y = document.getElementById("selecthead"); 
+        state.a = Number(y.options[y.selectedIndex].value);
+        var name = "head_" + String(state.a + 1);
+        filePath = "./images/head/"+name+".PNG";
+    }else if(choice === "body"){
+        var y = document.getElementById("selectbody"); 
+        state.b = Number(y.options[y.selectedIndex].value);
+        var name = "body_" + String(state.b + 1);
+        filePath = "./images/body/"+name+".PNG";
+    }else{
+        var y = document.getElementById("selectbackground"); 
+        state.c = Number(y.options[y.selectedIndex].value);
+        var name = "background_" + String(state.c + 1);
+        filePath = "./images/background/"+name+".PNG";
+    }
+    x.style.backgroundImage = "url(" + filePath +")";
+    show(choice);
+}
+function wakeup(){
+    var x = document.getElementById("sleep");
+    if(state.d === 0){
+        state.d = 1
+        filePath = "./images/sleep_2.gif";
+    }else{
+        state.d = 0
+        filePath = "./images/sleep_1.gif";
+    }
+    x.src = filePath;
+}
+</script>
+</head>
+<body>
+<div id="main">
+        <div id="name">
+            <h1>刘雨昕的衣帽柜是你get不到的美(4月8日10:30下线)</h1>
+        </div>
+        <div id="background">
+            <div id="head"></div>
+            <div id="body"></div>
+        </div>
+        <div id="choice">
+                <div>
+                    <button id="beforehead" type="button" onclick="before('head')" >上一个发型</button>
+                    <button id="beforebody" type="button" onclick="before('body')" >上一件衣服</button>
+                    <button id="beforebackground" type="button" onclick="before('background')" >上一个背景</button>
+                </div>
+                <div>
+                    <button id="nexthead" type="button" onclick="next('head')" >下一个发型</button>
+                    <button id="nextbody" type="button" onclick="next('body')" >下一件衣服</button>
+                    <button id="nextbackground" type="button" onclick="next('background')" >下一个背景</button>
+                </div>
+                <div>
+                    <select id="selecthead" name="selecthead" onchange="change('head')">
+                        <script>
+                            for(var i=0;i<70;i++){document.write('<option value="' + i + '">第' + (i+1) + '个发型</option>');}
+                        </script>
+                    </select>
+                    <select id="selectbody" name="selectbody" onchange="change('body')">
+                        <script>
+                            for(var i=0;i<70;i++){document.write('<option value="' + i + '">第' + (i+1) + '件衣服</option>');}
+                        </script>
+                    </select>
+                    <select id="selectbackground" name="selectbackground" onchange="change('background')">
+                        <script>
+                            for(var i=0;i<13;i++){document.write('<option value="' + i + '">第' + (i+1) + '个背景</option>');}
+                        </script>
+                    </select>
+                </div>
+                <div>
+                    <div id="numhead">当前是第1个发型</div>
+                    <div id="numbody">当前是第1件衣服</div>
+                    <div id="numbackground">当前是第1个背景</div>
+                </div>
+            </div>
+     
+                <img id="sleep" src="./images/sleep_1.gif" alt="" onclick="wakeup()">
+            
+                 
+            
+            
+            
+            <!--embed id="music" src="./music/bgm.mp3" hidden="false" autostart="true" loop="true"-->
+            <audio id="music" controls="controls" height="100" width="100">
+                    <source src="./music/bgm.mp3" type="audio/mp3" />
+                    <source src="./music/bgm.mp3" type="audio/ogg" />
+                  <embed height="100" width="100" src="./music/bgm.mp3" />
+            </audio>
+</div>
+</body>
+</html>
